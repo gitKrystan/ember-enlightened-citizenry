@@ -1,10 +1,6 @@
 <h1>GET READY!</h1>
-<h1>{{model.name}}</h1>
-<h1>${{model.totalExpenditures}}</h1>
-<h1>${{model.expendituresSupporting}}</h1>
-<h1>${{model.expendituresOpposing}}</h1>
-<h1>${{model.totalReceipts}}</h1>
-<h1>${{model.totalContributions}}</h1>
-<h1>${{model.totalDisbursements}}</h1>
-<h1>${{model.cashOnHand}}</h1>
-{{info-graph}}
+{{log 'in route :' model}}
+<h5>committee_name: ${{model}}</h5>
+<h5>expendituresSupporting: ${{model.expendituresSupporting}}</h5>
+
+{{info-graph rawData=model}}
