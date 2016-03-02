@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  modelHash: Ember.inject.service('info-data'),
   minSpent: '10000',
   fecIDs: {
     Trump: 'P80001571',
@@ -9,25 +10,18 @@ export default Ember.Route.extend({
   key: 'a7092ddfbc7c4440af07ad76b485d965',
 
   model() {
-    var modelHash = this.addCandidateResultsToHash();
-  },
-
-  addCandidateResultsToHash() {
+    let modelHash = this.get('modelHash').modelHash;
+    let route = this;
     let candidates = Object.keys(this.get('fecIDs'));
     let fecIDs = this.get('fecIDs');
-    let modelHash = {};
     for (var i = 0; i < candidates.length; i++) {
-      let promises = promises || [];
       let candidate = candidates[i];
       let fecID = fecIDs[candidate];
       this.putExpendituresInHash(candidate, fecID).then(function(result) {
         modelHash[candidate] = result;
-        promises.push(modelHash);
+        console.log(modelHash)
       });
     }
-    Ember.RSVP.all(promises).then(function(values) {
-      console.log(values)
-    })
   },
 
   putExpendituresInHash(candidate, fecID) {
